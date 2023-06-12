@@ -6,9 +6,11 @@ public class Server {
     {
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "server.cfg"))
         {
-            com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapter("SimpleParkingAdapter");
-            com.zeroc.Ice.Object object = new ParkingI();
-            adapter.add(object, com.zeroc.Ice.Util.stringToIdentity("SimpleParking"));
+            com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Service");
+            ParkingI parking = new ParkingI();
+            parking.setCommunicator(communicator);
+
+            adapter.add(parking, com.zeroc.Ice.Util.stringToIdentity("SimpleParking"));
             adapter.activate();
             communicator.waitForShutdown();
         } catch (ConnectionRefusedException e){

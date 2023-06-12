@@ -23,6 +23,7 @@ public class ConexionBD {
             // cadenaconexionRemota="jdbc:oracle:thin:P09713_1_2/CweDiY14@200.3.193.24:1522:ESTUD";
             String cadenaconexionRemota = prop.getProperty("ConexionBD");
 
+
             conexion = DriverManager.getConnection(cadenaconexionRemota, prop.getProperty("usuarioBD"),
                     prop.getProperty("paswordBD"));
             if (conexion == null) {

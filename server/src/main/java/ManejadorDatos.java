@@ -47,7 +47,7 @@ public class ManejadorDatos {
 
     public Tarifa buscarTarifa(Tipo tipo) {
         try{
-            String query = "SELECT * FROM TARIFA t WHERE IDTIPO = ?";
+            String query = "SELECT * FROM TARIFAS t WHERE IDTIPO = ?";
             PreparedStatement prepareStatement = conexion.prepareStatement(query);
             prepareStatement.setInt(1, tipo.getIdTipo());
             ResultSet resultado = prepareStatement.executeQuery();

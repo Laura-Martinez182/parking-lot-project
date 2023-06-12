@@ -37,20 +37,21 @@ public class ParkingI implements Demo.Parking  { //VentasManager
         Tarifa tarifa = manejadorDatos.buscarTarifa(tipo);
 
         estacionamiento=calculateRate(tarifa,estacionamiento);
-        //manejadorDatos.actualizarEstacionamiento(estacionamiento);
+        manejadorDatos.actualizarEstacionamiento(estacionamiento);
 
 
         System.out.println("Precio calculado correctamente");
+        System.out.println("------------------------------------");
 
         Date date1 = new Date();
         date1.setTime(estacionamiento.getTiempo_entrada().getTime());
-        String tiempo_entrada = new SimpleDateFormat("dd-MM-yyyy hh:mm").format(date1);
+        String tiempo_entrada = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(date1);
 
         Date date2 = new Date();
         date2.setTime(estacionamiento.getTiempo_salida().getTime());
-        String tiempo_salida = new SimpleDateFormat("dd-MM-yyyy hh:mm").format(date2);
+        String tiempo_salida = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(date2);
 
-        return "La tarifa es: $"+tarifa.getValor()+"la hora\nEntrada: "+tiempo_entrada+"\nSalida: "+tiempo_salida+"\nSu total es: "+estacionamiento.getTotal();
+        return "------------------------------\nPlaca:"+placa+"\nLa tarifa es: $"+tarifa.getValor()+" la hora\nEntrada: "+tiempo_entrada+"\nSalida: "+tiempo_salida+"\nSu total es: $"+estacionamiento.getTotal()+"\n------------------------------";
     }
 
     public Estacionamiento calculateRate(Tarifa tarifa, Estacionamiento estacionamiento){
@@ -64,15 +65,14 @@ public class ParkingI implements Demo.Parking  { //VentasManager
         // calculate hours minutes and seconds
         int hours = seconds / 3600;
 
+        System.out.println("---------CALCULANDO TARIFA--------");
+        System.out.println("Entrada: " + tiempo_entrada);
+        System.out.println("Salida: " + tiempo_salida);
 
-        System.out.println("timestamp1: " + tiempo_entrada);
-        System.out.println("timestamp2: " + tiempo_salida);
-
-        System.out.println("Difference: ");
-        System.out.println(" Hours: " + hours);
+        System.out.println("Horas de permanencia: " + hours);
 
         int total= hours*tarifa.getValor();
-
+        System.out.println("Total: $" + total);
         estacionamiento.setTiempo_salida(tiempo_salida);
         estacionamiento.setTotal(total);
 
