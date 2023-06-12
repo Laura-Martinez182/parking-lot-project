@@ -17,7 +17,9 @@ package Demo;
 
 public interface Parking extends com.zeroc.Ice.Object
 {
-    void calculateParking(String placa, com.zeroc.Ice.Current current);
+    boolean validatePlaca(String placa, com.zeroc.Ice.Current current);
+
+    String calculateParking(String placa, com.zeroc.Ice.Current current);
 
     /** @hidden */
     static final String[] _iceIds =
@@ -50,6 +52,27 @@ public interface Parking extends com.zeroc.Ice.Object
      * @param current -
      * @return -
     **/
+    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_validatePlaca(Parking obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
+    {
+        com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
+        com.zeroc.Ice.InputStream istr = inS.startReadParams();
+        String iceP_placa;
+        iceP_placa = istr.readString();
+        inS.endReadParams();
+        boolean ret = obj.validatePlaca(iceP_placa, current);
+        com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
+        ostr.writeBool(ret);
+        inS.endWriteParams(ostr);
+        return inS.setResult(ostr);
+    }
+
+    /**
+     * @hidden
+     * @param obj -
+     * @param inS -
+     * @param current -
+     * @return -
+    **/
     static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_calculateParking(Parking obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
     {
         com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
@@ -57,8 +80,11 @@ public interface Parking extends com.zeroc.Ice.Object
         String iceP_placa;
         iceP_placa = istr.readString();
         inS.endReadParams();
-        obj.calculateParking(iceP_placa, current);
-        return inS.setResult(inS.writeEmptyParams());
+        String ret = obj.calculateParking(iceP_placa, current);
+        com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
+        ostr.writeString(ret);
+        inS.endWriteParams(ostr);
+        return inS.setResult(ostr);
     }
 
     /** @hidden */
@@ -68,7 +94,8 @@ public interface Parking extends com.zeroc.Ice.Object
         "ice_id",
         "ice_ids",
         "ice_isA",
-        "ice_ping"
+        "ice_ping",
+        "validatePlaca"
     };
 
     /** @hidden */
@@ -103,6 +130,10 @@ public interface Parking extends com.zeroc.Ice.Object
             case 4:
             {
                 return com.zeroc.Ice.Object._iceD_ice_ping(this, in, current);
+            }
+            case 5:
+            {
+                return _iceD_validatePlaca(this, in, current);
             }
         }
 

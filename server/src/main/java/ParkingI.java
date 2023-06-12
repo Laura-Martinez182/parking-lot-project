@@ -2,6 +2,8 @@ import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Current;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ParkingI implements Demo.Parking  { //VentasManager
 
@@ -12,11 +14,16 @@ public class ParkingI implements Demo.Parking  { //VentasManager
     }
 
     @Override
-    public void calculateParking(String placa, Current current) {
-            calculatePrice(placa);
+    public boolean validatePlaca(String placa, Current current) {
+        return placa.matches("[a-zA-Z]{3}[0-9]{3}") || placa.matches("[a-zA-Z]{3}[0-9]{2}[a-zA-Z]");
     }
 
-    private void calculatePrice(String placa) {
+    @Override
+    public String calculateParking(String placa, Current current) {
+           return calculatePrice(placa);
+    }
+
+    private String calculatePrice(String placa) {
         ConexionBD conexionBD = new ConexionBD(communicator);
         conexionBD.conectarBaseDatos();
 
@@ -30,11 +37,20 @@ public class ParkingI implements Demo.Parking  { //VentasManager
         Tarifa tarifa = manejadorDatos.buscarTarifa(tipo);
 
         estacionamiento=calculateRate(tarifa,estacionamiento);
-        manejadorDatos.actualizarEstacionamiento(estacionamiento);
+        //manejadorDatos.actualizarEstacionamiento(estacionamiento);
 
 
         System.out.println("Precio calculado correctamente");
 
+        Date date1 = new Date();
+        date1.setTime(estacionamiento.getTiempo_entrada().getTime());
+        String tiempo_entrada = new SimpleDateFormat("dd-MM-yyyy hh:mm").format(date1);
+
+        Date date2 = new Date();
+        date2.setTime(estacionamiento.getTiempo_salida().getTime());
+        String tiempo_salida = new SimpleDateFormat("dd-MM-yyyy hh:mm").format(date2);
+
+        return "La tarifa es: $"+tarifa.getValor()+"la hora\nEntrada: "+tiempo_entrada+"\nSalida: "+tiempo_salida+"\nSu total es: "+estacionamiento.getTotal();
     }
 
     public Estacionamiento calculateRate(Tarifa tarifa, Estacionamiento estacionamiento){

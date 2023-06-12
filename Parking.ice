@@ -3,6 +3,7 @@ module Demo
 {
     interface Parking
     {
-        void calculateParking(string placa);
+        bool validatePlaca(string placa);
+        string calculateParking(string placa);
     }
 }

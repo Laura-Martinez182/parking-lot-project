@@ -17,22 +17,62 @@ package Demo;
 
 public interface ParkingPrx extends com.zeroc.Ice.ObjectPrx
 {
-    default void calculateParking(String placa)
+    default boolean validatePlaca(String placa)
     {
-        calculateParking(placa, com.zeroc.Ice.ObjectPrx.noExplicitContext);
+        return validatePlaca(placa, com.zeroc.Ice.ObjectPrx.noExplicitContext);
     }
 
-    default void calculateParking(String placa, java.util.Map<String, String> context)
+    default boolean validatePlaca(String placa, java.util.Map<String, String> context)
     {
-        _iceI_calculateParkingAsync(placa, context, true).waitForResponse();
+        return _iceI_validatePlacaAsync(placa, context, true).waitForResponse();
     }
 
-    default java.util.concurrent.CompletableFuture<Void> calculateParkingAsync(String placa)
+    default java.util.concurrent.CompletableFuture<java.lang.Boolean> validatePlacaAsync(String placa)
+    {
+        return _iceI_validatePlacaAsync(placa, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
+    }
+
+    default java.util.concurrent.CompletableFuture<java.lang.Boolean> validatePlacaAsync(String placa, java.util.Map<String, String> context)
+    {
+        return _iceI_validatePlacaAsync(placa, context, false);
+    }
+
+    /**
+     * @hidden
+     * @param iceP_placa -
+     * @param context -
+     * @param sync -
+     * @return -
+     **/
+    default com.zeroc.IceInternal.OutgoingAsync<java.lang.Boolean> _iceI_validatePlacaAsync(String iceP_placa, java.util.Map<String, String> context, boolean sync)
+    {
+        com.zeroc.IceInternal.OutgoingAsync<java.lang.Boolean> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "validatePlaca", null, sync, null);
+        f.invoke(true, context, null, ostr -> {
+                     ostr.writeString(iceP_placa);
+                 }, istr -> {
+                     boolean ret;
+                     ret = istr.readBool();
+                     return ret;
+                 });
+        return f;
+    }
+
+    default String calculateParking(String placa)
+    {
+        return calculateParking(placa, com.zeroc.Ice.ObjectPrx.noExplicitContext);
+    }
+
+    default String calculateParking(String placa, java.util.Map<String, String> context)
+    {
+        return _iceI_calculateParkingAsync(placa, context, true).waitForResponse();
+    }
+
+    default java.util.concurrent.CompletableFuture<java.lang.String> calculateParkingAsync(String placa)
     {
         return _iceI_calculateParkingAsync(placa, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
     }
 
-    default java.util.concurrent.CompletableFuture<Void> calculateParkingAsync(String placa, java.util.Map<String, String> context)
+    default java.util.concurrent.CompletableFuture<java.lang.String> calculateParkingAsync(String placa, java.util.Map<String, String> context)
     {
         return _iceI_calculateParkingAsync(placa, context, false);
     }
@@ -44,12 +84,16 @@ public interface ParkingPrx extends com.zeroc.Ice.ObjectPrx
      * @param sync -
      * @return -
      **/
-    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_calculateParkingAsync(String iceP_placa, java.util.Map<String, String> context, boolean sync)
+    default com.zeroc.IceInternal.OutgoingAsync<java.lang.String> _iceI_calculateParkingAsync(String iceP_placa, java.util.Map<String, String> context, boolean sync)
     {
-        com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "calculateParking", null, sync, null);
-        f.invoke(false, context, null, ostr -> {
+        com.zeroc.IceInternal.OutgoingAsync<java.lang.String> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "calculateParking", null, sync, null);
+        f.invoke(true, context, null, ostr -> {
                      ostr.writeString(iceP_placa);
-                 }, null);
+                 }, istr -> {
+                     String ret;
+                     ret = istr.readString();
+                     return ret;
+                 });
         return f;
     }
 
