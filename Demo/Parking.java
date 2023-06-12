@@ -17,7 +17,7 @@ package Demo;
 
 public interface Parking extends com.zeroc.Ice.Object
 {
-    void printString(String s, com.zeroc.Ice.Current current);
+    void calculateParking(String placa, com.zeroc.Ice.Current current);
 
     /** @hidden */
     static final String[] _iceIds =
@@ -50,25 +50,25 @@ public interface Parking extends com.zeroc.Ice.Object
      * @param current -
      * @return -
     **/
-    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_printString(Parking obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
+    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_calculateParking(Parking obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
     {
         com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
         com.zeroc.Ice.InputStream istr = inS.startReadParams();
-        String iceP_s;
-        iceP_s = istr.readString();
+        String iceP_placa;
+        iceP_placa = istr.readString();
         inS.endReadParams();
-        obj.printString(iceP_s, current);
+        obj.calculateParking(iceP_placa, current);
         return inS.setResult(inS.writeEmptyParams());
     }
 
     /** @hidden */
     final static String[] _iceOps =
     {
+        "calculateParking",
         "ice_id",
         "ice_ids",
         "ice_isA",
-        "ice_ping",
-        "printString"
+        "ice_ping"
     };
 
     /** @hidden */
@@ -86,23 +86,23 @@ public interface Parking extends com.zeroc.Ice.Object
         {
             case 0:
             {
-                return com.zeroc.Ice.Object._iceD_ice_id(this, in, current);
+                return _iceD_calculateParking(this, in, current);
             }
             case 1:
             {
-                return com.zeroc.Ice.Object._iceD_ice_ids(this, in, current);
+                return com.zeroc.Ice.Object._iceD_ice_id(this, in, current);
             }
             case 2:
             {
-                return com.zeroc.Ice.Object._iceD_ice_isA(this, in, current);
+                return com.zeroc.Ice.Object._iceD_ice_ids(this, in, current);
             }
             case 3:
             {
-                return com.zeroc.Ice.Object._iceD_ice_ping(this, in, current);
+                return com.zeroc.Ice.Object._iceD_ice_isA(this, in, current);
             }
             case 4:
             {
-                return _iceD_printString(this, in, current);
+                return com.zeroc.Ice.Object._iceD_ice_ping(this, in, current);
             }
         }
 

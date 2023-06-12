@@ -17,38 +17,38 @@ package Demo;
 
 public interface ParkingPrx extends com.zeroc.Ice.ObjectPrx
 {
-    default void printString(String s)
+    default void calculateParking(String placa)
     {
-        printString(s, com.zeroc.Ice.ObjectPrx.noExplicitContext);
+        calculateParking(placa, com.zeroc.Ice.ObjectPrx.noExplicitContext);
     }
 
-    default void printString(String s, java.util.Map<String, String> context)
+    default void calculateParking(String placa, java.util.Map<String, String> context)
     {
-        _iceI_printStringAsync(s, context, true).waitForResponse();
+        _iceI_calculateParkingAsync(placa, context, true).waitForResponse();
     }
 
-    default java.util.concurrent.CompletableFuture<Void> printStringAsync(String s)
+    default java.util.concurrent.CompletableFuture<Void> calculateParkingAsync(String placa)
     {
-        return _iceI_printStringAsync(s, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
+        return _iceI_calculateParkingAsync(placa, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
     }
 
-    default java.util.concurrent.CompletableFuture<Void> printStringAsync(String s, java.util.Map<String, String> context)
+    default java.util.concurrent.CompletableFuture<Void> calculateParkingAsync(String placa, java.util.Map<String, String> context)
     {
-        return _iceI_printStringAsync(s, context, false);
+        return _iceI_calculateParkingAsync(placa, context, false);
     }
 
     /**
      * @hidden
-     * @param iceP_s -
+     * @param iceP_placa -
      * @param context -
      * @param sync -
      * @return -
      **/
-    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_printStringAsync(String iceP_s, java.util.Map<String, String> context, boolean sync)
+    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_calculateParkingAsync(String iceP_placa, java.util.Map<String, String> context, boolean sync)
     {
-        com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "printString", null, sync, null);
+        com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "calculateParking", null, sync, null);
         f.invoke(false, context, null, ostr -> {
-                     ostr.writeString(iceP_s);
+                     ostr.writeString(iceP_placa);
                  }, null);
         return f;
     }

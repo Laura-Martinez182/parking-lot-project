@@ -10,7 +10,7 @@ public class Client {
             {
                 throw new Error("Invalid proxy");
             }
-            parkingPrx.printString("Hello World!");
+           // parkingPrx.printString("Hello World!");
         }
     }
 }

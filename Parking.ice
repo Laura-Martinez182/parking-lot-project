@@ -3,6 +3,6 @@ module Demo
 {
     interface Parking
     {
-        void printString(string s);
+        void calculateParking(string placa);
     }
 }
