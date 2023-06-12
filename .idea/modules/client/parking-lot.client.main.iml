@@ -3,6 +3,7 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$/../../../client/src/main">
       <sourceFolder url="file://$MODULE_DIR$/../../../client/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../client/src/main/resources" type="java-resource" />
     </content>
   </component>
 </module>
