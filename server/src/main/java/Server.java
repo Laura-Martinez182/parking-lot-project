@@ -1,4 +1,6 @@
 import com.zeroc.Ice.ConnectionRefusedException;
+import com.zeroc.Ice.DNSException;
+import com.zeroc.Ice.SocketException;
 
 public class Server {
 
@@ -13,8 +15,12 @@ public class Server {
             adapter.add(parking, com.zeroc.Ice.Util.stringToIdentity("SimpleParking"));
             adapter.activate();
             communicator.waitForShutdown();
-        } catch (ConnectionRefusedException e){
-        System.out.println("No se pudo establecer la conexion con el cliente");
-    }
+        }catch (SocketException u) {
+            System.out.println("No se pudo asignar la direccion IP o el puerto solicitado al socket, verifique que la direccion IP del servidor este correcta y que el puerto este disponible.");
+        } catch (DNSException k) {
+            System.out.println("El nombre del host es desconocido");
+        }catch (RuntimeException e){
+            System.out.println(e.getMessage());
+        }
     }
 }

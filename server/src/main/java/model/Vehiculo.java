@@ -1,3 +1,7 @@
+package model;
+
+import model.Tipo;
+
 public class Vehiculo {
 
     private int idVehiculo;

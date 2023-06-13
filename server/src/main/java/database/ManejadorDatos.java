@@ -1,3 +1,10 @@
+package database;
+
+import model.Estacionamiento;
+import model.Tarifa;
+import model.Tipo;
+import model.Vehiculo;
+
 import java.sql.*;
 
 public class ManejadorDatos {

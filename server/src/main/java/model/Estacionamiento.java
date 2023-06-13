@@ -1,3 +1,7 @@
+package model;
+
+import model.Vehiculo;
+
 import java.sql.Timestamp;
 
 public class Estacionamiento {
@@ -6,7 +10,7 @@ public class Estacionamiento {
 
 
     private int idEstacionamiento;
-    private Vehiculo  vehiculo;
+    private Vehiculo vehiculo;
     private Timestamp tiempo_entrada;
     private Timestamp tiempo_salida;
     private int total;

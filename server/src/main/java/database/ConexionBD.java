@@ -1,3 +1,5 @@
+package database;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -21,7 +23,7 @@ public class ConexionBD {
             // String cadenaconexionLocal="jdbc:postgresql://localhost:5432/coffeemachine";
             // String
             // cadenaconexionRemota="jdbc:oracle:thin:P09713_1_2/CweDiY14@200.3.193.24:1522:ESTUD";
-            String cadenaconexionRemota = prop.getProperty("ConexionBD");
+            String cadenaconexionRemota = prop.getProperty("database.ConexionBD");
 
 
             conexion = DriverManager.getConnection(cadenaconexionRemota, prop.getProperty("usuarioBD"),

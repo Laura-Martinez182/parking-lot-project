@@ -1,43 +1,56 @@
 import Demo.ParkingPrx;
+import com.zeroc.Ice.ConnectFailedException;
 import com.zeroc.Ice.ConnectionRefusedException;
 import com.zeroc.Ice.ObjectPrx;
+import com.zeroc.Ice.SocketException;
+import java.io.Console;
 
 public class Client {
 
     public static void main(String[] args)
     {
+        Console console = System.console();
+
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args,"client.cfg"))
         {
+            String placa= console.readLine("Ingrese la placa: ");
+
             ObjectPrx base = communicator.propertyToProxy("Service.Proxy");
             Demo.ParkingPrx parkingPrx = Demo.ParkingPrx.checkedCast(base);
             if(parkingPrx == null)
             {
                 throw new Error("Invalid proxy");
             }
-           boolean valid =validateArgs(args,parkingPrx);
+           boolean valid =validateInput(placa,parkingPrx);
             if(valid){
-                calculatePrice(args[0], parkingPrx);
+                calculatePrice(placa, parkingPrx);
             }
 
-        }catch (ConnectionRefusedException e){
-            System.out.println("No se pudo establecer la conexion con el servidor");
+        }catch (ConnectionRefusedException e) {
+            System.err.println("La conexion fue rechazada por el servidor, no se pudo establecer una conexion en el puerto o IP especificada.");
+        }catch (ConnectFailedException e) {
+            System.err.println("Tiempo de conexion agotado. Verifique la direccion IP indicada para el cliente.");
+        } catch (SocketException u) {
+            System.out.println("No se pudo encontrar el puerto indicado, verifique que este disponible.");
+        }catch (RuntimeException e){
+            System.out.println(e.getMessage());
         }
     }
 
-    public static boolean validateArgs(String[] args, ParkingPrx parkingPrx){
-        if(args.length == 0) {
-            noArgs();
+    public static boolean validateInput(String placa, ParkingPrx parkingPrx){
+        if(placa.isEmpty()) {
+            noPlaca();
             return false;
         }
 
-        if(!parkingPrx.validatePlaca(args[0])){
+        if(!parkingPrx.validatePlaca(placa)){
             invalidPlaca();
             return false;
         }
         return true;
     }
 
-    public static void noArgs(){
+    public static void noPlaca(){
         System.out.println("Debe ingresar la placa del vehiculo" );
 
     }

@@ -1,5 +1,8 @@
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Current;
+import database.ConexionBD;
+import database.ManejadorDatos;
+import model.*;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -31,13 +34,21 @@ public class ParkingI implements Demo.Parking  { //VentasManager
         manejadorDatos.setConexion(conexionBD.getConnection());
 
         Vehiculo vehiculo= manejadorDatos.buscarVehiculo(placa);
+        if(vehiculo==null){
+            throw new RuntimeException("El vehículo no se encuentra en el sistema");
+        }
 
         Estacionamiento estacionamiento= manejadorDatos.buscarEstacionamiento(vehiculo);
+
+        if(estacionamiento==null){
+            throw new RuntimeException("El vehiculo no ha ingresado al estacionamiento");
+        }
+
         Tipo tipo= vehiculo.getTipo();
         Tarifa tarifa = manejadorDatos.buscarTarifa(tipo);
 
         estacionamiento=calculateRate(tarifa,estacionamiento);
-        manejadorDatos.actualizarEstacionamiento(estacionamiento);
+        //manejadorDatos.actualizarEstacionamiento(estacionamiento);//SUPUESTO: YA PAGA
 
 
         System.out.println("Precio calculado correctamente");
