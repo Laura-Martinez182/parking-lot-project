@@ -28,14 +28,14 @@ public class Client {
             } catch (SocketException  e) {
                 System.err.println("Se ha presentado un error en la conexion del sistema, por favor espere");
                 retry=true;
-                if(countRetry<5){
+                if(countRetry<4){
                     countRetry++;
                 }else{
                     proxy="Emergency.Proxy";
                     countRetry=0;
                 }
 
-                Thread.sleep(5000);
+                Thread.sleep(1000);
             }
 
 

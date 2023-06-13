@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module version="4">
-  <component name="NewModuleRootManager">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
     <content url="file://$MODULE_DIR$/../../../client/src/main">
       <sourceFolder url="file://$MODULE_DIR$/../../../client/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../../client/src/main/resources" type="java-resource" />
     </content>
+    <orderEntry type="jdk" jdkName="11" jdkType="JavaSDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Gradle: com.zeroc:ice:3.7.2" level="project" />
+    <orderEntry type="module" module-name="server.parking-lot.server.main" />
   </component>
 </module>
