@@ -48,7 +48,7 @@ public class ParkingI implements Demo.Parking  { //VentasManager
         Tarifa tarifa = manejadorDatos.buscarTarifa(tipo);
 
         estacionamiento=calculateRate(tarifa,estacionamiento);
-        //manejadorDatos.actualizarEstacionamiento(estacionamiento);//SUPUESTO: YA PAGA
+        manejadorDatos.actualizarEstacionamiento(estacionamiento);//SUPUESTO: YA PAGA
 
 
         System.out.println("Precio calculado correctamente");
