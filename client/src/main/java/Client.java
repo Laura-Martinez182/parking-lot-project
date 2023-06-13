@@ -1,41 +1,59 @@
 import Demo.ParkingPrx;
-import com.zeroc.Ice.ConnectFailedException;
-import com.zeroc.Ice.ConnectionRefusedException;
 import com.zeroc.Ice.ObjectPrx;
 import com.zeroc.Ice.SocketException;
+
 import java.io.Console;
 
 public class Client {
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws InterruptedException {
         Console console = System.console();
+        boolean retry=false;
+        int countRetry=0;
+        String proxy="Service.Proxy";
+        do {
 
-        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args,"client.cfg"))
-        {
-            String placa= console.readLine("Ingrese la placa: ");
+            try (com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "client.cfg")) {
 
-            ObjectPrx base = communicator.propertyToProxy("Service.Proxy");
-            Demo.ParkingPrx parkingPrx = Demo.ParkingPrx.checkedCast(base);
-            if(parkingPrx == null)
-            {
-                throw new Error("Invalid proxy");
+                ObjectPrx base = communicator.propertyToProxy(proxy);
+                Demo.ParkingPrx parkingPrx = Demo.ParkingPrx.checkedCast(base);
+
+                if (parkingPrx == null) {
+                    throw new Error("Invalid proxy");
+                }
+
+                exitParkingLot(console,parkingPrx);
+
+
+            } catch (SocketException  e) {
+                System.err.println("Se ha presentado un error en la conexion del sistema, por favor espere");
+                retry=true;
+                if(countRetry<5){
+                    countRetry++;
+                }else{
+                    proxy="Emergency.Proxy";
+                    countRetry=0;
+                }
+
+                Thread.sleep(5000);
             }
-           boolean valid =validateInput(placa,parkingPrx);
-            if(valid){
-                calculatePrice(placa, parkingPrx);
-            }
 
-        }catch (ConnectionRefusedException e) {
-            System.err.println("La conexion fue rechazada por el servidor, no se pudo establecer una conexion en el puerto o IP especificada.");
-        }catch (ConnectFailedException e) {
-            System.err.println("Tiempo de conexion agotado. Verifique la direccion IP indicada para el cliente.");
-        } catch (SocketException u) {
-            System.out.println("No se pudo encontrar el puerto indicado, verifique que este disponible.");
-        }catch (RuntimeException e){
-            System.out.println(e.getMessage());
-        }
+
+        }while(retry);
     }
+
+    public static void exitParkingLot(Console console, ParkingPrx parkingPrx){
+
+         do {
+                 String placa = console.readLine("Ingrese la placa: ");
+                 boolean valid = validateInput(placa, parkingPrx);
+                 if (valid) {
+                     calculatePrice(placa, parkingPrx);
+                 }
+
+         }while(true);
+    }
+
 
     public static boolean validateInput(String placa, ParkingPrx parkingPrx){
         if(placa.isEmpty()) {

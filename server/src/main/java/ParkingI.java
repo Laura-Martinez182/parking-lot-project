@@ -35,13 +35,13 @@ public class ParkingI implements Demo.Parking  { //VentasManager
 
         Vehiculo vehiculo= manejadorDatos.buscarVehiculo(placa);
         if(vehiculo==null){
-            throw new RuntimeException("El vehículo no se encuentra en el sistema");
+            return "El vehiculo no se encuentra en el sistema";
         }
 
         Estacionamiento estacionamiento= manejadorDatos.buscarEstacionamiento(vehiculo);
 
         if(estacionamiento==null){
-            throw new RuntimeException("El vehiculo no ha ingresado al estacionamiento");
+            return "El vehiculo no ha ingresado al estacionamiento";
         }
 
         Tipo tipo= vehiculo.getTipo();

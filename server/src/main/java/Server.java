@@ -19,8 +19,6 @@ public class Server {
             System.out.println("No se pudo asignar la direccion IP o el puerto solicitado al socket, verifique que la direccion IP del servidor este correcta y que el puerto este disponible.");
         } catch (DNSException k) {
             System.out.println("El nombre del host es desconocido");
-        }catch (RuntimeException e){
-            System.out.println(e.getMessage());
         }
     }
 }
